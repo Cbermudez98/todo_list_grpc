@@ -10,15 +10,11 @@ class Log {
         });
     }
 
-    debug(...args) {
-        this.logger.debug(args);
-    }
-
     info(...args) {
         this.logger.info(args);
     }
 
-    error(...args) {
+    error(args) {
         this.logger.error(args);
     }
 

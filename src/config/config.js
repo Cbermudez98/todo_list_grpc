@@ -9,5 +9,8 @@ module.exports = {
     },
     SERVER: {
         PORT: process.env.SERVER_PORT
+    },
+    JWT: {
+        SECRET: process.env.JWT_PRIVATE_KEY
     }
 }

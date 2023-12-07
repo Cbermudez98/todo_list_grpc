@@ -1,3 +1,6 @@
+const log = require("../../helper/log");
+const { encrypt, compare } = require("../../utils/bcrypt");
+const { singToken } = require("../../utils/jwt");
 const UserRepository = require("../repository/user.repository");
 
 class UserController {
@@ -6,8 +9,9 @@ class UserController {
 
     async CreateUser(user) {
         try {
-            const user = await this.#userRepository.createUser(user);
-            return user;
+            const password = encrypt(user.password);
+            const newUser = await this.#userRepository.createUser({ ...user, password });
+            return newUser;
         } catch (error) {
             throw error;
         }
@@ -15,9 +19,19 @@ class UserController {
 
     async Login(user) {
         try {
-            const userDb = await this.#userRepository.findUserBy(user);
+            const userDb = await this.#userRepository.findUserBy({ email: user.email });
+            log.info(userDb);
+            const isValid = compare(user.password, userDb.password);
+            if (!isValid) {
+                throw new Error("Password is not valid");
+            }
+            const token = singToken({ _id: userDb._id });
+            return { token };
         } catch (error) {
-            
+            log.error(error);
+            throw error;
         }
     }
 }
+
+module.exports = UserController;
