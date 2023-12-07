@@ -1,7 +1,30 @@
 syntax = "proto3";
 
 message User {
-    int32 id = 1;
+    string _id = 1;
     string name = 2;
     string last_name = 3;
+    string email = 4;
+    string password = 5;
+}
+
+message UserCreate {
+    string name = 1;
+    string last_name = 2;
+    string email = 3;
+    string password = 4;
+}
+
+message UserLogin {
+    string email = 1;
+    string password = 2;
+}
+
+message AuthResponse {
+    string token = 1;
+}
+
+service UserService {
+    rpc CreateUSer (UserCreate) returns (User);
+    rpc Login (UserLogin) returns (AuthResponse);
 }
