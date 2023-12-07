@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+message Task {
+    string _id = 1;
+    string title = 2;
+    string description = 3;
+    bool done = 4;
+}
+
+message TaskCreate {
+    string title = 1;
+    string description = 2;
+    bool done = 3;
+}
+
+message Tasks {
+    repeated Task task = 1;
+}
+
+message SingleTask {
+    string _id = 1;
+}
+
+message Empty {}
+
+service TaskService {
+    rpc CreateTask (TaskCreate) returns (Task);
+    rpc GetTask (SingleTask) returns (Task);
+    rpc GetTasks (Empty) returns (Tasks);
+}
