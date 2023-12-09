@@ -17,12 +17,12 @@ const userSchema = new Schema({
     password: {
         type: String,
         require: true
-    },
+    }
 }, {
     versionKey: false,
     timestamps: true
 });
 
-const userModel = model("user", userSchema);
+const userModel = model("users", userSchema);
 
 module.exports = userModel;
